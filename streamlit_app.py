@@ -1,5 +1,23 @@
 import streamlit as st
 from openai import OpenAI
+import os
+import pandas as pd
+
+df = pd.read_csv("FlowerDatabase.csv")
+df = df.drop(
+    [
+        'Desc',
+        # 'PlantType',
+        # 'HardinessZones',
+        # 'BloomsIn',
+        'SoilNeeds',
+        # 'SunNeeds',
+        # 'WaterNeeds',
+        # 'Maintenance',
+        'RelatedFlowers'
+    ],
+    axis=1,
+)
 
 # Show title and description.
 st.title("💬 Chatbot")
@@ -12,13 +30,13 @@ st.write(
 # Ask user for their OpenAI API key via `st.text_input`.
 # Alternatively, you can store the API key in `./.streamlit/secrets.toml` and access it
 # via `st.secrets`, see https://docs.streamlit.io/develop/concepts/connections/secrets-management
-openai_api_key = st.text_input("OpenAI API Key", type="password")
-if not openai_api_key:
+os.environ["OPENAI_API_KEY"] = st.text_input("OpenAI API Key", type="password")
+if not os.environ["OPENAI_API_KEY"]:
     st.info("Please add your OpenAI API key to continue.", icon="🗝️")
 else:
 
     # Create an OpenAI client.
-    client = OpenAI(api_key=openai_api_key)
+    client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
     # Create a session state variable to store the chat messages. This ensures that the
     # messages persist across reruns.
@@ -41,9 +59,10 @@ else:
 
         # Generate a response using the OpenAI API.
         stream = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[
-                {"role": m["role"], "content": m["content"]}
+                # {"role": "system", "content": "You are a helpful assistant. You will be given a query to answer. Try to use the provided context to answer the query, and do not try to guess if you don't have the needed information. Use the context below to answer the query. ###" + df.to_string() + "###"},
+                {"role": m["role"], "content": "From this context: " + df.to_string() + "\n\n" + m["content"]}
                 for m in st.session_state.messages
             ],
             stream=True,
