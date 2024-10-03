@@ -62,7 +62,7 @@ else:
             model="gpt-4o-mini",
             messages=[
                 # {"role": "system", "content": "You are a helpful assistant. You will be given a query to answer. Try to use the provided context to answer the query, and do not try to guess if you don't have the needed information. Use the context below to answer the query. ###" + df.to_string() + "###"},
-                {"role": m["role"], "content": "From this context: " + df.to_string() + "\n\n" + m["content"]}
+                {"role": m["role"], "content": "Form your answer from this Flower Dataset: \n\n###\n\n" + df.to_string() + "\n\n###\n\n" + m["content"]}
                 for m in st.session_state.messages
             ],
             stream=True,
