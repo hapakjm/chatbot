@@ -3,11 +3,9 @@
 A simple Streamlit app that shows how to build a chatbot using OpenAI's GPT-4o-mini.
 
 
-## Introducction
+## Introduction
 
-This Gradio-powered Q&A app, enhanced by Langchain, is designed to efficiently handle any dataset, including large-scale datasets with complex values such as sentences or phrases.
-
-The app simplifies the process of querying even the most extensive and intricate datasets, streamlining the search for meaningful insights. Powered by a sophisticated Langchain setup and integrated with a ChatOpenAI model, it ensures accurate and timely responses to user queries.
+DataWise is an intelligent and user-friendly Q&A platform designed for handling large-scale datasets with complex values. Powered by Langchain and OpenAI, this app allows for seamless interaction with data, enabling questions to be asked and precise, context-aware responses to be received. Whether intricate datasets or simple queries are involved, DataWise simplifies the experience by transforming complex data into clear, actionable insights.
 
 How it works:
 
